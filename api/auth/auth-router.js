@@ -12,21 +12,15 @@ const {
 } = require('./auth-middleware');
 
 
-router.post('/register', validateUsername, usernameExists, (req, res, next) => {
+router.post('/register', validateUsername, usernameExists, async (req, res,) => {
   const {
     username,
     password
   } = req.body
 
   const hash = bcrypt.hashSync(password, 8)
-  User.add({
-      username,
-      password: hash
-    })
-    .then(newUser => {
-      res.status(201).json(newUser)
-    })
-    .catch(next)
+  const user = await User.insert({username, password: hash})
+  res.status(201).json(user)
 });
 
 

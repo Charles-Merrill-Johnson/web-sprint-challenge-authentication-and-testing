@@ -31,21 +31,17 @@ const usernameDoesNotExists = async (req, res, next) => {
 
 
 const usernameExists = async (req, res, next) => {
-    const [user] = await User.findBy({username: req.body.username})
-    try{
-        if(user) {
-            next({ 
-                status: 422,
-                message: "username taken"
-             })
-        } else {
-            req.user = user
-            next()
-        }
-    } catch (err) {
-        next(err)
+    const { username } = req.body;
+    const existingUser = await User.findBy({ username });
+  
+    if (existingUser != null) {
+      next({ status: 401, message: "username taken" });
+      return;
     }
-} 
+  
+    next();
+  }
+  
 
 module.exports = {
     validateUsername,
