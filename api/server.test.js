@@ -38,7 +38,7 @@ describe('server.js', () => {
       beforeEach(async () => {
         await db('users').truncate()
       })
-      it('adds a new user with a username, password, and id, to the table on success', async () => {
+      it('adds new user with a username, password, and id, to the table on success', async () => {
         await request(server).post('/api/auth/register').send(dad1)
         const user = await db('users').first()
         expect(user).toHaveProperty('id')
@@ -47,7 +47,7 @@ describe('server.js', () => {
         expect(user.username).toBe(dad1.username)
         expect(user.password).toMatch(/^\$2[ayb]\$.{56}$/)
       })
-      it('responds with the new user on success', async () => {
+      it('responds with the new user on completion', async () => {
         const {
           body
         } = await request(server).post('/api/auth/register').send(dad1)
@@ -63,7 +63,7 @@ describe('server.js', () => {
         await db('users').truncate()
         await request(server).post('/api/auth/register').send(dad2)
       })
-      it('responds with a proper status code on successful login', async () => {
+      it('responds with correct status code on successful login', async () => {
         const res = await request(server).post('/api/auth/login').send(dad2)
         expect(res.status).toBe(200)
       })
@@ -84,7 +84,7 @@ describe('server.js', () => {
         expect(res.body).toHaveProperty('message')
         expect(res.body.message).toBe('token required')
       })
-      it('responds on a error status code on missing token', async () => {
+      it('responds with a error status code on missing token', async () => {
         const res = await request(server).get('/api/jokes')
         expect(res.status).toBe(401)
       })
