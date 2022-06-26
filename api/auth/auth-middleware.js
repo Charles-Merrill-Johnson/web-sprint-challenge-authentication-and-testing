@@ -14,7 +14,7 @@ const validateUsername = (req, res, next) => {
 
 const usernameDoesNotExists = async (req, res, next) => {
     try{
-        const [user] = await User.findBy({username: req.body.username})
+        const { user } = await User.findBy({username: req.body.username})
         if(!user) {
             next({ 
                 status: 422,

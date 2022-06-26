@@ -6,22 +6,21 @@ const {
 
 module.exports = (req, res, next) => {
   const token = req.headers.authorization
-  if (!token) {
-    return next({
+  if (token == null) {
+    next({
       status: 401,
       message: "token required"
-    })
+    });
+    return;
   }
-  jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
+  jwt.verify(token, JWT_SECRET, (err, decodedJWT) => {
     if (err) {
-      next({
-        status: 401,
-        message: "token invalid"
-      })
-    } else {
-      req.decodedToken = decodedToken
-      next();
+      next({ status: 401, message: "token invalid"});
+      return;
     }
+
+    req.decodedJWT = decodedJWT;
+    next();
   })
 };
 /*

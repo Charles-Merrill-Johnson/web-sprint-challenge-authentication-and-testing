@@ -52,18 +52,15 @@ router.post('/register', validateUsername, usernameExists, async (req, res,) => 
 */
 
 
-router.post('/login', validateUsername, usernameDoesNotExists, (req, res, next) => {
-  if (bcrypt.compareSync(req.body.password, req.user.password)) {
+router.post('/login', validateUsername,  usernameDoesNotExists, (req, res, next) => {
+  if(bcrypt.compareSync(req.body.password, req.user.password)){
     const token = buildToken(req.user)
     res.status(200).json({
       message: `welcome, ${req.user.username}`,
       token,
     })
   } else {
-    next({
-      status: 401,
-      message: "invalid credentials"
-    })
+    next({ status: 401, message: 'invalid credentials'})
   }
 });
 
