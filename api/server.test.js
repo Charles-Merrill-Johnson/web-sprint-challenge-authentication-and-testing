@@ -79,7 +79,7 @@ describe('server.js', () => {
         await request(server).post('/api/auth/register').send(dad2)
 
       })
-      it('responds with token required without token', async () => {
+      it('responds with message "token required" when token is not present', async () => {
         const res = await request(server).get('/api/jokes')
         expect(res.body).toHaveProperty('message')
         expect(res.body.message).toBe('token required')

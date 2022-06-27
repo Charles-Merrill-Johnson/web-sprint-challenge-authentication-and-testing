@@ -54,6 +54,12 @@ Your finished project must include all of the following requirements (further in
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics.
 
 1. Differences between using _sessions_ or _JSON Web Tokens_ for authentication.
+Sessions is stateful and JWT's are stateless, Sessions is eaiser to implement it also requires more load on the server since it authenticates with every request. JWT are created by the server and then sent to the client. The client then stores the token in the header of every request.  
+
 2. What does `bcryptjs` do to help us store passwords in a secure manner?
+bcryptjs is a password hashing function we can use to build a password secuirity platform. One thing that bcrypt does is it hashes every password with salt.
+
 3. How are unit tests different from integration and end-to-end testing?
+
+
 4. How does _Test Driven Development_ change the way we write applications and tests?
